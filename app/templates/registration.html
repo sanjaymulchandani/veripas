@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container col-md-5 mt-5">
+
+<form method="POST">
+
+{% csrf_token %}
+
+<h1>Register <i class="bi bi-person-add"></i></h1>
+<br>
+<label><code><b>Username: Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</b></code></label>
+<br><br>
+{{form.username}}
+<br>
+{{form.email}}
+<br>
+{{form.password1}}
+<br>
+{{form.password2}}
+<br>
+<button class="btn btn-primary" type="submit">Register</button>
+
+</form>
+<br>
+
+<div class="accordion mb-5" id="accordionExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Password rules
+        </button>
+      </h2>
+      <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+            <li>Your password can’t be too similar to your other personal information.</li>
+            <li>Your password must contain at least 8 characters.</li>
+            <li>Your password can’t be a commonly used password.</li>
+            <li>Your password can’t be entirely numeric.</li>
+            
+        </div>
+      </div>
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div style="text-align: right;" class="container me-4">
+
+
+<a class="btn btn-outline-success mt-3"  href="{% url 'user-details-create' %}">
+  
+<h6 class="mt-2">
+  <i class="bi bi-plus-square"></i>
+   New
+</h6>
+
+</a>
+</div>
+<br>
+
+
+<div class="container-xxl">
+<table class="table align-middle mb-0 table-hover">
+    <thead class="table-primary">
+      <tr>
+        <th scope="col">Sr. No</th>
+        <th scope="col">Name</th>
+        <th scope="col">Username</th>
+        <th scope="col">Email</th>
+        <th scope="col">Password</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
+        <th scope="col">Date/Time created</th>
+      </tr>
+    </thead>
+
+    <tbody>
+        {% for user_detail in user_details %}
+        <tr>
+        
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{ user_detail.name }}</td>
+        <td>{{ user_detail.username }}</td>
+        <td>{{ user_detail.email }}</td>
+        <td>
+          <span class="password-hidden">{{ user_detail.password }}</span>
+          <input style="border: 0px solid; width: 100px; background-color: transparent;" type="password" class="password-visible" value="{{ user_detail.password }}" readonly>
+          <button class="password-toggle btn btn-success" data-visible="false">Show</button>
+          <button class="password-copy btn btn-outline-secondary"><i class="bi bi-clipboard"></i></button>
+        </td>
+        <td><a href="{% url 'user-details-update' user_detail.id %}"><i class="bi bi-pencil-square"></i></a></td>
+        <td><a class="text-danger" href="{% url 'user-details-delete' user_detail.id %}"><i class="bi bi-trash3"></i></a></td>
+        <td>{{ user_detail.date }}</td>
+      </tr>
+            {% empty %}
+      <tr>
+          <td colspan="7">No user details available.</td>
+      </tr>
+
+      {% endfor %}
+
+    </tbody>
+  </table>
+
+</div>
+
+ <script>
+        // JavaScript code for password visibility toggle and copy
+        const passwordToggleButtons = document.querySelectorAll('.password-toggle');
+        const passwordFields = document.querySelectorAll('.password-hidden');
+        const passwordVisibleFields = document.querySelectorAll('.password-visible');
+        const passwordCopyButtons = document.querySelectorAll('.password-copy');
+
+        passwordToggleButtons.forEach((button, index) => {
+            button.addEventListener('click', () => {
+                if (button.getAttribute('data-visible') === 'false') {
+                    passwordFields[index].style.display = 'none';
+                    passwordVisibleFields[index].style.display = 'inline';
+                    button.textContent = 'Show';
+                    button.setAttribute('data-visible', 'true');
+                } else {
+                    passwordFields[index].style.display = 'inline';
+                    passwordVisibleFields[index].style.display = 'none';
+                    button.textContent = 'Hide';
+                    button.setAttribute('data-visible', 'false');
+                }
+            });
+        });
+
+        passwordCopyButtons.forEach((button, index) => {
+            button.addEventListener('click', () => {
+                const password = passwordFields[index].textContent;
+                const tempInput = document.createElement('input');
+                document.body.appendChild(tempInput);
+                tempInput.setAttribute('value', password);
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+                alert('Password copied to clipboard: ' + password);
+            });
+        });
+    </script>
+{% endblock content %}
