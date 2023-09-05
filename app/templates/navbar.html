@@ -1,0 +1,80 @@
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <!-- Container wrapper -->
+    <div class="container">
+      <!-- Navbar brand -->
+      <a class="navbar-brand me-2" href="{% url 'home' %}">
+        <img
+          src="https://i.ibb.co/XVr2fYm/veripas-logo-removebg-preview.png"
+          height="36"
+          alt="Veripas Logo"
+          loading="lazy"
+          style="margin-top: -1px;"
+        />
+      </a>
+      <!-- Toggle button -->
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-mdb-toggle="collapse"
+        data-mdb-target="#navbarButtonsExample"
+        aria-controls="navbarButtonsExample"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+      {% if user.is_authenticated %}
+      <!-- Collapsible wrapper -->
+      <div class="collapse navbar-collapse" id="navbarButtonsExample">
+        <!-- Left links -->
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="{% url 'user-details' %}">Dashboard</a>
+          </li> -->
+        </ul>
+         
+        
+        <a class="text-secondary" href="{% url 'home' %}">
+          <h2>
+            <i class="bi bi-house px-3 mt-5"></i>
+          </h2>
+        </a>
+
+        <a class="text-secondary" href="{% url 'user-details' %}">
+          <h2>
+            <i class="bi bi-list-ul px-3 me-2 mt-5"></i>
+          </h2>
+        </a>
+
+        <div class="d-flex align-items-center">
+        <a href="#">
+          <p class="btn btn-outline-secondary px-3 me-3 mt-3"><i class="bi bi-person-badge me-3"></i>Hi, {{user.username | title}}</p>
+        </a>
+        </div>
+
+
+        <div class="d-flex align-items-center">
+            <a href="{% url 'logout' %}" type="button" class="btn btn-danger px-3 me-2">
+              Logout
+            </a>
+        </div>
+        <!-- Left links -->
+        {% else %}
+        <div class="d-flex align-items-center">
+          <a href="{% url 'login' %}" type="button" class="btn btn-primary px-3 me-2">
+            Login
+          </a>
+          <a href="{% url 'register' %}" type="button" class="btn btn-success me-3">
+            Sign up for free
+          </a>
+      
+        </div>
+        {% endif %}
+      </div>
+      <!-- Collapsible wrapper -->
+    </div>
+    <!-- Container wrapper -->
+  </nav>
+  <!-- Navbar -->

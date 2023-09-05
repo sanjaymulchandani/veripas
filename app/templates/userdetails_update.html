@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-3">
+<form method="post" action="{% url 'user-details-update' userDetails.id %}">
+    {% csrf_token %}
+    
+    <h4>
+        
+        <a class="text-primary" style="text-decoration: none;" href="{% url 'user-details' %}">
+            <i class="bi bi-backspace"></i> Back to list
+        </a>
+        
+    </h4>
+
+    <h3 class="mt-3">Update <i class="bi bi-pencil-square"></i></h3>
+    <label for="{{ form.name.id_for_label }}">Name:</label>
+    {{ form.name }}
+    <br>
+
+    <label for="{{ form.username.id_for_label }}">Username:</label>
+    {{ form.username }}
+    <br>
+    
+    <label for="{{ form.password.id_for_label }}">Password:</label>
+    {{ form.password }}
+    <br>
+    
+    <label for="{{ form.email.id_for_label }}">Email:</label>
+    {{ form.email }}
+    <br>
+    
+    <input class="btn btn-success w-50" type="submit" value="Update">
+</form>
+</div>
+
+{% endblock content %}

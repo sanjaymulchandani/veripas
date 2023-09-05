@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- <a href="{% url 'user-details' %}">Back to details</a>
+<a href="{% url 'home' %}">Back to home</a> -->
+<br>
+<div class="container mt-2">
+<form method="post" action="{% url 'user-details-create' %}">
+    {% csrf_token %}
+    
+    <h4>
+        
+    <a class="text-primary" style="text-decoration: none;" href="{% url 'user-details' %}">
+        <i class="bi bi-backspace"></i> Back to list
+    </a>
+    
+    </h4>
+    
+    <h3 class="mt-4">Add your details <i class="bi bi-file-earmark-lock"></i></h3> 
+    <p class="text-secondary">Dont worry! All your data is end-to-end encrypted.</p>
+
+    {{ form.name }}
+    <br>
+
+    {{ form.username }}
+    <br>
+    
+    {{ form.password }}
+    <br>
+    
+    {{ form.email }}
+    <br>
+    
+    <input type="submit" class="btn btn-success w-50" value="Add">
+</form>
+</div>
+{% endblock content %}
