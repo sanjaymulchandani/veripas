@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-$*h!92y(27zog=rdk41)!glb(=x26$#p-89$289$78lgmmq$&j
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -94,7 +94,7 @@ WSGI_APPLICATION = 'main.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'veripass_db',
+        'NAME': 'veripass_db_1',
         'USER': 'root',
         'PASSWORD': 'root',
         'HOST':'localhost',

@@ -9,7 +9,8 @@ from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from .models import UserDetails, HomeContent, WebsiteLogo
 from django.contrib import messages
-
+import string
+import secrets
 # Create your views here.
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -82,7 +83,7 @@ def logout_custom(request):
 
 @login_required
 def user_details_list(request):
-    user_details = UserDetails.objects.all()
+    user_details = UserDetails.objects.filter(user=request.user)
     return render(request, 'user_details.html', {'user_details': user_details})
 
 @login_required
@@ -125,3 +126,16 @@ def delete_user_details(request, pk):
     
     return render(request, 'userdetails_delete.html', {'userDetails': user_details})
 
+def generate_password(length = 12):
+    characters = string.ascii_letters + string.digits + string.punctuation
+    password = ''.join(secrets.choice(characters) for _ in range(length))
+    return password
+
+def password_generator(request):
+    if request.method == "POST":
+        length = int(request.POST.get('length', 12))
+        password = generate_password(length)
+    else:
+        password = generate_password()
+    
+    return render(request, 'password_generator.html', {'password':password})
