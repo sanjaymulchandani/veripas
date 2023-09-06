@@ -17,7 +17,7 @@ urlpatterns = [
     path('user-details/create/', views.create_user_details, name='user-details-create'),
     path('user-details/update/<int:pk>/', views.update_user_details, name='user-details-update'),
     path('user-details/delete/<int:pk>/', views.delete_user_details, name='user-details-delete'),
-
+    path('generate-password/', views.password_generator, name='generate-password'),
     # Include the API URLs under a separate path
     path('api/user-details/', views.UserDetailListCreateView.as_view(), name='user-details-api-list'),
     path('api/', include(router.urls)),
