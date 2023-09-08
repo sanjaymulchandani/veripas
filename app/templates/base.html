@@ -66,11 +66,80 @@
         .lnk:active {
         text-decoration: underline;
         }
+
+        .cookie-popup {
+        display: none;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: #fff;
+        color: #333;
+        border: #534f4f;
+        text-align: center;
+        padding: 10px;
+        z-index: 9999;
+        }
+
+        .cookie-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .cookie-content p {
+            margin: 0;
+        }
+
     </style>
 </head>
 <body>
     {% include 'navbar.html' %}
     {% block content %}{% endblock content %}
     {% include 'footer.html' %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const popup = document.getElementById('cookie-popup');
+            const acceptButton = document.getElementById('accept-cookies');
+            const rejectButton = document.getElementById('reject-cookies');
+        
+            // Check if the user has already accepted or rejected cookies
+            if (!document.cookie.includes('accepted_cookies=true') && !document.cookie.includes('rejected_cookies=true')) {
+                // Show the popup
+                popup.style.display = 'block';
+        
+                // Add an event listener to the "Accept" button
+                acceptButton.addEventListener('click', function () {
+                    // Set a cookie to remember that the user has accepted cookies
+                    document.cookie = 'accepted_cookies=true; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/';
+        
+                    // Hide the popup with a smooth animation
+                    popup.style.transition = 'transform 0.5s ease-out';
+                    popup.style.transform = 'translateY(100%)';
+        
+                    // After the animation, remove the popup from the DOM
+                    setTimeout(function () {
+                        popup.remove();
+                    }, 500);
+                });
+        
+                // Add an event listener to the "Reject" button
+                rejectButton.addEventListener('click', function () {
+                    // Set a cookie to remember that the user has rejected cookies
+                    document.cookie = 'rejected_cookies=true; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/';
+        
+                    // Hide the popup with a smooth animation
+                    popup.style.transition = 'transform 0.5s ease-out';
+                    popup.style.transform = 'translateY(100%)';
+        
+                    // After the animation, remove the popup from the DOM
+                    setTimeout(function () {
+                        popup.remove();
+                    }, 500);
+                });
+            }
+        });
+        
+        </script>
 </body>
 </html>
