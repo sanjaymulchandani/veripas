@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}Veripas - Login{% endblock %}
 {% block content %}
-<div class="col-md-5 position-absolute w-50 top-50 start-50 translate-middle p-5 rounded" 
-style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
+<div class="container col-md-5 mt-5">
 <form method="POST">
     {% csrf_token %}
     <h3 class="text-primary">Login<i class="bi bi-person-badge"></i></h3>
@@ -20,6 +19,8 @@ style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
     {{form.password}}
     <br>
     <button class="btn btn-primary" type="submit">Login</button>
+    <a class="text-primary" style="text-decoration:none; margin-left: 10px;" href="{% url 'register' %}">Don't have an account? Register.</a>
 </form>
 </div>
 {% endblock content %}
+

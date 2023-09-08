@@ -10,8 +10,22 @@
 
 <h1>Register <i class="bi bi-person-add"></i></h1>
 <br>
-<label><code><b>Username: Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</b></code></label>
-<br><br>
+<label class="mb-3"><code><b>Username: Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</b></code></label>
+{% if messages %}
+<div class="alert alert-light mt-2 mb-3" role="alert">
+<code>
+  <b>
+    <i class="bi bi-exclamation-circle"></i>
+  
+    {% for message in messages %}
+    {{ message.tags | title }} : {% if message.tags %} {% endif %} {{ message }}
+    {% endfor %}
+
+</b>
+</code>
+</div>
+{% endif %}
+
 {{form.username}}
 <br>
 {{form.email}}
@@ -21,6 +35,7 @@
 {{form.password2}}
 <br>
 <button class="btn btn-primary" type="submit">Register</button>
+<a class="text-primary" style="text-decoration:none; margin-left: 10px;" href="{% url 'login' %}">Already have an account? Login.</a>
 
 </form>
 <br>
@@ -43,5 +58,7 @@
       </div>
     </div>
 </div>
+
+
 
 {% endblock content %}

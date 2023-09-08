@@ -11,6 +11,9 @@ from .models import UserDetails, HomeContent, WebsiteLogo
 from django.contrib import messages
 import string
 import secrets
+from django.views.decorators.cache import cache_page
+from django.http import HttpResponse
+
 # Create your views here.
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -33,7 +36,7 @@ class UserDetailsRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView
         # Filter the queryset based on the current user's ID
         return UserDetails.objects.filter(user=self.request.user)
 
-
+@cache_page(60*15) # Cache for 15 minutes
 def home_view(request):
     home_content = HomeContent.objects.all()
     return render(request, 'index.html', {'home_content': home_content})
@@ -51,11 +54,16 @@ def register(request):
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            return redirect('user-details-create')
+            if user:
+                login(request, user)
+                return redirect('user-details-create')
+            else:
+                messages.error(request, 'Authentication failed. Please check your credentials.')  # Display authentication failure message
+        else:
+            messages.error(request, 'Form validation failed. Please correct the errors.')  # Display form validation error message
     else:
         form = RegistrationForm()
-    return render(request, 'registration.html', {'form':form})
+    return render(request, 'registration.html', {'form': form})
 
 @user_passes_test(lambda user: not user.username, login_url='home', redirect_field_name=None)
 def user_login(request):
@@ -102,7 +110,6 @@ def create_user_details(request):
     return render(request, 'userdetails_create.html', {'form': form})
 
 @login_required
-
 def update_user_details(request, pk):
     user_details = get_object_or_404(UserDetails, pk=pk)
     
@@ -139,3 +146,8 @@ def password_generator(request):
         password = generate_password()
     
     return render(request, 'password_generator.html', {'password':password})
+
+def set_cookie(request):
+    response = HttpResponse("Cookie set")
+    response.set_cookie('cookie_name', 'cookie_value')
+    return response
